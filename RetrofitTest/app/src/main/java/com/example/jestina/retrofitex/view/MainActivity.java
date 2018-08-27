@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import com.example.jestina.retrofitex.R;
+import com.example.jestina.retrofitex.common.YWLog;
 import com.example.jestina.retrofitex.contract.MainContract;
 import com.example.jestina.retrofitex.network.APIClient;
 import com.example.jestina.retrofitex.network.APIInterface;
 import com.example.jestina.retrofitex.network.response.MultipleResources;
 import com.example.jestina.retrofitex.presenter.MainPresenter;
+
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -51,12 +54,28 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         call.enqueue(new Callback<MultipleResources>() {
             @Override
             public void onResponse(Call<MultipleResources> call, Response<MultipleResources> response) {
+                YWLog.d(response.code() + "");
 
+                String displayResponse = "";
+
+                MultipleResources resources = response.body();
+                Integer text = resources.page;
+                Integer total = resources.total;
+                Integer totalPages = resources.total_pages;
+
+                List<MultipleResources.Datum> datumList = resources.data;
+
+                displayResponse += text + "Page\n" + total + " Total\n" + totalPages + " total pages";
+                for (MultipleResources.Datum datum : datumList) {
+                    displayResponse += datum.id + " " + datum.name + " " + datum.pantoneValue;
+                }
+
+                mTxvRetrofitResponse.setText(displayResponse);
             }
 
             @Override
             public void onFailure(Call<MultipleResources> call, Throwable throwable) {
-                
+                YWLog.d(throwable.toString());
             }
         });
     }
