@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.jestina.mpandroidchart.R;
 import com.example.jestina.mpandroidchart.contract.MainContract;
+import com.example.jestina.mpandroidchart.model.BarChartModel;
 import com.example.jestina.mpandroidchart.presenter.MainPresenter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.data.BarData;
@@ -26,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         initView();
         initPresenter();
 
-        drawChart();
+        drawChart(mainPresenter.getChartData());
     }
 
 
@@ -42,16 +43,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mainPresenter = new MainPresenter();
     }
 
-    private void drawChart() {
+    private void drawChart(List<BarChartModel> barChartModelList) {
         List<BarEntry> entries = new ArrayList<BarEntry>();
 
-        int sum = 0;
-        for(int i=0; i<20; i++) {
-            sum += i;
-            entries.add(new BarEntry((float) i, sum));
+        for(int i=0; i<barChartModelList.size(); i++) {
+            entries.add(new BarEntry(barChartModelList.get(i).getMonth(),
+                     barChartModelList.get(i).getSellingAmount()));
         }
 
-        BarDataSet barDataSet = new BarDataSet(entries, "test");
+        BarDataSet barDataSet = new BarDataSet(entries, "판매량");
 
         BarData barData = new BarData(barDataSet);
 
