@@ -30,4 +30,5 @@ dependencies {
     api files('libs/okhttp-3.11.0.jar')
     implementation files('libs/converter-gson-2.3.0.jar')
     implementation files('libs/logging-interceptor-3.11.0.jar')
+    implementation files('libs/okio-1.13.0.jar')
 }
