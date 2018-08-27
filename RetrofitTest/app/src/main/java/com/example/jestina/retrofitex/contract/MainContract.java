@@ -9,7 +9,7 @@ import com.example.jestina.retrofitex.view.BaseView;
 
 public interface MainContract {
     interface View extends BaseView {
-
+        
     }
 
     interface Presenter extends BasePresenter {
