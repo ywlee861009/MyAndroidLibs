@@ -15,19 +15,4 @@ public class MainPresenter implements MainContract.Presenter {
     public void initPresenter() {
 
     }
-
-    public List<BarChartModel> getChartData() {
-        List<BarChartModel> barChartDataArr = new ArrayList<>();
-
-        for(int i=0; i<12; i++) {
-             barChartDataArr.add(
-                     new BarChartModel.Builder()
-                        .month(i)
-                        .setSellingAmount((int) (Math.random() * 1000))
-                        .build()
-            );
-        }
-
-        return barChartDataArr;
-    }
 }

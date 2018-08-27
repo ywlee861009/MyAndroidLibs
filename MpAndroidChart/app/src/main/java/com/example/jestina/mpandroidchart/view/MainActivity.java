@@ -1,7 +1,10 @@
 package com.example.jestina.mpandroidchart.view;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import com.example.jestina.mpandroidchart.R;
 import com.example.jestina.mpandroidchart.contract.MainContract;
@@ -18,7 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
     MainPresenter mainPresenter;
 
-    private BarChart mBarChart;
+    private Button mBtnGoBarChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,15 +30,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         initView();
         initPresenter();
 
-        drawChart(mainPresenter.getChartData());
     }
-
 
     @Override
     public void initView() {
         setContentView(R.layout.activity_main);
 
-        mBarChart = (BarChart) findViewById(R.id.activity_main_chart);
+        mBtnGoBarChart = (Button) findViewById(R.id.activity_main_btn_go_bar_chart);
+        mBtnGoBarChart.setOnClickListener(onClickListener);
+
     }
 
     @Override
@@ -43,21 +46,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mainPresenter = new MainPresenter();
     }
 
-    private void drawChart(List<BarChartModel> barChartModelList) {
-        List<BarEntry> entries = new ArrayList<BarEntry>();
 
-        for(int i=0; i<barChartModelList.size(); i++) {
-            entries.add(new BarEntry(barChartModelList.get(i).getMonth(),
-                     barChartModelList.get(i).getSellingAmount()));
+    private View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.activity_main_btn_go_bar_chart:
+                    startActivity(new Intent(MainActivity.this, BarChartActivity.class));
+                    break;
+            }
         }
-
-        BarDataSet barDataSet = new BarDataSet(entries, "판매량");
-
-        BarData barData = new BarData(barDataSet);
-
-        mBarChart.setData(barData);
-        mBarChart.setFitBars(false);
-        mBarChart.animateXY(1000, 1000);
-        mBarChart.invalidate();
-    }
+    };
 }
