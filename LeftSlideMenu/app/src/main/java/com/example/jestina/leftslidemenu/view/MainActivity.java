@@ -1,7 +1,9 @@
-package com.example.jestina.leftslidemenu;
+package com.example.jestina.leftslidemenu.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.jestina.leftslidemenu.R;
 
 public class MainActivity extends AppCompatActivity {
 
