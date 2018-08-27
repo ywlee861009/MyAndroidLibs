@@ -11,6 +11,7 @@ import com.example.jestina.mpandroidchart.contract.MainContract;
 import com.example.jestina.mpandroidchart.model.BarChartModel;
 import com.example.jestina.mpandroidchart.presenter.MainPresenter;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     MainPresenter mainPresenter;
 
     private Button mBtnGoBarChart;
+    private Button mBtnGoPieChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mBtnGoBarChart = (Button) findViewById(R.id.activity_main_btn_go_bar_chart);
         mBtnGoBarChart.setOnClickListener(onClickListener);
 
+        mBtnGoPieChart = (Button) findViewById(R.id.activity_main_btn_go_pie_chart);
+        mBtnGoPieChart.setOnClickListener(onClickListener);
     }
 
     @Override
@@ -52,9 +56,23 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.activity_main_btn_go_bar_chart:
-                    startActivity(new Intent(MainActivity.this, BarChartActivity.class));
+                    goBarChartActivity();
+                    break;
+
+                case R.id.activity_main_btn_go_pie_chart:
+                    goPieChartActivity();
                     break;
             }
         }
     };
+
+    @Override
+    public void goBarChartActivity() {
+        startActivity(new Intent(MainActivity.this, BarChartActivity.class));
+    }
+
+    @Override
+    public void goPieChartActivity() {
+        startActivity(new Intent(MainActivity.this, PieChartActivity.class));
+    }
 }

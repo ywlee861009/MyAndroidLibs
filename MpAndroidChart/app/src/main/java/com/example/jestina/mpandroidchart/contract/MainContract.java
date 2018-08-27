@@ -12,9 +12,10 @@ import java.util.List;
 
 public interface MainContract {
     interface View extends BaseView {
+        void goBarChartActivity();
+        void goPieChartActivity();
     }
 
     interface Presenter extends BasePresenter {
-
     }
 }

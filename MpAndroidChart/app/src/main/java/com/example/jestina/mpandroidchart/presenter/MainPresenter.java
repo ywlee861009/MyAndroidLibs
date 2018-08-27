@@ -15,4 +15,5 @@ public class MainPresenter implements MainContract.Presenter {
     public void initPresenter() {
 
     }
+
 }
