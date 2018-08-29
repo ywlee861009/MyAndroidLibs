@@ -21,7 +21,7 @@ public class PieChartPresenter implements PieChartContract.Presenter {
     public List<PieChartModel> getChartData() {
         List<PieChartModel> pieChartModelList = new ArrayList<>();
 
-        for(int i=0; i<8; i++) {
+        for(int i=0; i<6; i++) {
             pieChartModelList.add(
                     new PieChartModel.Builder()
                             .name("tester " + i)
