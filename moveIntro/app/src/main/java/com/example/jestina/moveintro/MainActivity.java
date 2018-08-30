@@ -55,11 +55,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public boolean onResourceReady(GlideDrawable glideDrawable, Integer integer, Target<GlideDrawable> target, boolean b, boolean b1) {
                         YWLog.d("Imageview Size = " + mImvImage.getWidth() + "/" + mImvImage.getHeight());
-//
-//                        TranslateAnimation translateAnimation = new TranslateAnimation(0.0f, 1000.0f, 0.0f, 0.0f);
-//                        translateAnimation.setDuration(5000);
-//
-//                        mImvImage.setAnimation(translateAnimation);
+
                         return false;
                     }
                 }).
