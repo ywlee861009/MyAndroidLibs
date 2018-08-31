@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mBtnCountUp.setOnClickListener(onClickListener);
     }
 
+
     @Override
     public void initMemberPresenter() {
         mPresenter = new MainPresenter();
