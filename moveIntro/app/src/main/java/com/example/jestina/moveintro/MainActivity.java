@@ -54,7 +54,8 @@ public class MainActivity extends AppCompatActivity {
 
                     @Override
                     public boolean onResourceReady(GlideDrawable glideDrawable, Integer integer, Target<GlideDrawable> target, boolean b, boolean b1) {
-                        YWLog.d("Imageview Size = " + mImvImage.getWidth() + "/" + mImvImage.getHeight());
+                        YWLog.d("onResourceReady = " + glideDrawable.isAnimated());
+
 
                         return false;
                     }
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         int imageResource = 0;
 
         String imageName = "img_" + String.valueOf((int) (Math.random() * 5) + 1);
+//        String imageName = "img_4";
 
         imageResource = getResources().getIdentifier(imageName, "drawable", getPackageName());
 
