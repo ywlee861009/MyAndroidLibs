@@ -1,4 +1,4 @@
-package com.example.jestina.myerp.util;
+package com.example.jestina.myerp.common;
 
 import android.util.Log;
 
