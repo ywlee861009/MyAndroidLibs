@@ -1,0 +1,35 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/jestinaMain</item>
+        <item name="colorPrimaryDark">@color/jestinaMain</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- 일반적인 Fragment 를 포함하는 Activity 에서 사요할 테마 (액션바 존재) -->
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <!-- 단독 테마 -->
+    <style name="AppTheme.NoNavBar">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- Login Activity Custom EditText 2018.09.05 -->
+    <style name="LoginEtx" parent="Widget.AppCompat.EditText">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorHint">@color/white</item>
+    </style>
+</resources>
