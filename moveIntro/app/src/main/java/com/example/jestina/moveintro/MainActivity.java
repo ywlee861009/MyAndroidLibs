@@ -1,11 +1,14 @@
 package com.example.jestina.moveintro;
 
 import android.graphics.drawable.Drawable;
+import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -22,8 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
     private final String STR_1080 = "https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img2.jpg";
     private final String STR_1642 = "https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img_1.jpg";
-    private final String STR_640 = "https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img.jpg";
+    private final String STR_640 = "https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img.png";
 
+
+    private ConstraintLayout mCloClo;
     private ImageView mImvImage;
     private ImageView mImvLogo;
 
@@ -32,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        mCloClo = (ConstraintLayout) findViewById(R.id.clo_const);
         mImvImage = (ImageView) findViewById(R.id.main_imv_images);
         mImvLogo = (ImageView) findViewById(R.id.main_imv_logo);
 
@@ -46,14 +51,16 @@ public class MainActivity extends AppCompatActivity {
 
         int rand = (int) (Math.random() * 3) + 1;
 
+        String url = "";
         if(rand == 1) {
-            setImage(STR_1080);
+            url = STR_1080;
         } else if(rand == 2) {
-            setImage(STR_640);
+            url = STR_640;
         } else {
-            setImage(STR_1642);
+            url = STR_1642;
         }
 
+        setImage(url);
         setLogo();
     }
 
@@ -68,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void setImage(String url) {
+        YWLog.d("setImage url() = " + url);
         int imageId = getImageResource();
 
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mImvImage);
@@ -86,34 +94,52 @@ public class MainActivity extends AppCompatActivity {
                         YWLog.d("image size = " + glideDrawable.getIntrinsicWidth() + "/" + glideDrawable.getIntrinsicHeight());
                         YWLog.d("Screen size = "  + dm.widthPixels + "/" + dm.heightPixels);
 
-                        TranslateAnimation translateAnimation = new TranslateAnimation(
-                                Animation.RELATIVE_TO_SELF, 0.0f,
-                                Animation.RELATIVE_TO_SELF, -1.0f,
-                                Animation.RELATIVE_TO_SELF, 0.0f,
-                                Animation.RELATIVE_TO_SELF, 0.0f
-                        );
-                        translateAnimation.setAnimationListener(new Animation.AnimationListener() {
-                            @Override
-                            public void onAnimationStart(Animation animation) {
-                                YWLog.d("========> onAnimationStart() ");
-                            }
+                        // Drawable size 가 화면보다 작으면, imageview 를 match_parent 로, 애니메이션 x
+                        // 크면, 세로 꽉채운후 비율고정, 애니메이션 o
+                        if(glideDrawable.getMinimumWidth() <= dm.widthPixels) {
+                            // 화면보다 작다.
+                            YWLog.d("Smaller than screen ");
 
-                            @Override
-                            public void onAnimationEnd(Animation animation) {
-                                YWLog.d("========> onAnimationEnd() ");
-                            }
 
-                            @Override
-                            public void onAnimationRepeat(Animation animation) {
+                            ConstraintSet set = new ConstraintSet();
+                            set.clone(mCloClo);
+                            set.setDimensionRatio(R.id.main_imv_images, "");
+                            set.connect(mImvImage.getId(), ConstraintSet.RIGHT, mCloClo.getId(), ConstraintSet.RIGHT);
+                            set.applyTo(mCloClo);
+//                            mImvImage.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_CONSTRAINT, ConstraintLayout.LayoutParams.MATCH_CONSTRAINT));
+                            mImvImage.setScaleType(ImageView.ScaleType.FIT_XY);
 
-                            }
-                        });
-                        translateAnimation.setFillAfter(true);
-                        translateAnimation.setDuration(3000);
+                        } else {
+                            // 화면보다 크다.
+                            YWLog.d("Lager than screen ");
+                            TranslateAnimation translateAnimation = new TranslateAnimation(
+                                    Animation.RELATIVE_TO_SELF, 0.0f,
+                                    Animation.RELATIVE_TO_SELF, -0.1f,
+                                    Animation.RELATIVE_TO_SELF, 0.0f,
+                                    Animation.RELATIVE_TO_SELF, 0.0f
+                            );
+                            translateAnimation.setAnimationListener(new Animation.AnimationListener() {
+                                @Override
+                                public void onAnimationStart(Animation animation) {
+                                    YWLog.d("========> onAnimationStart() ");
+                                }
 
-                        mImvImage.setAnimation(translateAnimation);
-                        mImvImage.startAnimation(translateAnimation);
+                                @Override
+                                public void onAnimationEnd(Animation animation) {
+                                    YWLog.d("========> onAnimationEnd() ");
+                                }
 
+                                @Override
+                                public void onAnimationRepeat(Animation animation) {
+
+                                }
+                            });
+                            translateAnimation.setFillAfter(true);
+                            translateAnimation.setDuration(3000);
+
+                            mImvImage.setAnimation(translateAnimation);
+                            mImvImage.startAnimation(translateAnimation);
+                        }
 
                         return false;
                     }
