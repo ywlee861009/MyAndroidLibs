@@ -20,6 +20,10 @@ import static java.lang.Thread.sleep;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String STR_1080 = "https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img2.jpg";
+    private final String STR_1642 = "https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img_1.jpg";
+    private final String STR_640 = "https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img.jpg";
+
     private ImageView mImvImage;
     private ImageView mImvLogo;
 
@@ -40,6 +44,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        int rand = (int) (Math.random() * 3) + 1;
+
+        if(rand == 1) {
+            setImage(STR_1080);
+        } else if(rand == 2) {
+            setImage(STR_640);
+        } else {
+            setImage(STR_1642);
+        }
+
+        setLogo();
     }
 
     private void setLogo() {
@@ -52,14 +67,12 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    private void setImage() {
+    private void setImage(String url) {
         int imageId = getImageResource();
 
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mImvImage);
         Glide.with(this).
-//                load("http://webimg.jestina.co.kr/UpData/App//Template/201702/170222_yuna_re_1536.png").
-//                load("https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img_1.jpg").
-                load("https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img.png").
+                load(url).
                 listener(new RequestListener<String, GlideDrawable>() {
                     @Override
                     public boolean onException(Exception e, String integer, Target<GlideDrawable> target, boolean b) {
@@ -114,12 +127,6 @@ public class MainActivity extends AppCompatActivity {
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
 
-        // image view size
-        // screen size
-
-
-        setImage();
-        setLogo();
 
     }
 
