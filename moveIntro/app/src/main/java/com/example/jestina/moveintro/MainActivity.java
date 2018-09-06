@@ -57,16 +57,21 @@ public class MainActivity extends AppCompatActivity {
 
         GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mImvImage);
         Glide.with(this).
-                load(imageId).
-                listener(new RequestListener<Integer, GlideDrawable>() {
+//                load("http://webimg.jestina.co.kr/UpData/App//Template/201702/170222_yuna_re_1536.png").
+//                load("https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img_1.jpg").
+                load("https://raw.githubusercontent.com/ywlee861009/MyAndroidLibs/master/moveIntro/app/src/main/res/drawable/img.png").
+                listener(new RequestListener<String, GlideDrawable>() {
                     @Override
-                    public boolean onException(Exception e, Integer integer, Target<GlideDrawable> target, boolean b) {
+                    public boolean onException(Exception e, String integer, Target<GlideDrawable> target, boolean b) {
                         return false;
                     }
 
                     @Override
-                    public boolean onResourceReady(GlideDrawable glideDrawable, Integer integer, Target<GlideDrawable> target, boolean b, boolean b1) {
-                        YWLog.d("onResourceReady = " + mImvImage.getWidth() + "/" + mImvImage.getHeight());
+                    public boolean onResourceReady(GlideDrawable glideDrawable, String integer, Target<GlideDrawable> target, boolean b, boolean b1) {
+
+                        DisplayMetrics dm = getApplicationContext().getResources().getDisplayMetrics();
+                        YWLog.d("image size = " + glideDrawable.getIntrinsicWidth() + "/" + glideDrawable.getIntrinsicHeight());
+                        YWLog.d("Screen size = "  + dm.widthPixels + "/" + dm.heightPixels);
 
                         TranslateAnimation translateAnimation = new TranslateAnimation(
                                 Animation.RELATIVE_TO_SELF, 0.0f,
@@ -110,10 +115,7 @@ public class MainActivity extends AppCompatActivity {
         super.onWindowFocusChanged(hasFocus);
 
         // image view size
-        YWLog.d("logoview Size = " + mImvLogo.getWidth() + "/" + mImvLogo.getHeight());
-        YWLog.d("imageview Size = " + mImvImage.getWidth() + "/" + mImvImage.getHeight());
         // screen size
-        getScreenSize();
 
 
         setImage();
