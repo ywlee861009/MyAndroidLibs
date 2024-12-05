@@ -1,0 +1,54 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v2.0.0
+        with:
+          webhook: ${{ secrets.SLACK_WEBHOOK }}
+          webhook-type: incoming-webhook
+          payload: |
+            text: "* Depoly Start *"
+            blocks:
+              - type: "header"
+                text: 
+                  type: "plain_text"
+                  text: ":smoking: Deploy Start"
+                  emoji: true
+            
+              - type: "divider"
+            
+              - type: "section"
+                text:
+                  type: "plain_text"
+                  text: |
+                    Github Action deploy Start
+                    담배 한대 태우고 오십쇼
+            
+                    * Version Code: ${{ env.VERSION_NAME }}
+                    * Version Name: ${{ env.VERSION_CODE }}
+                  emoji: true
+        if: always()
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: Build with Gradle
+      run: ./gradlew build
